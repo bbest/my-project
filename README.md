@@ -1,6 +1,6 @@
 # my-project
 
-Now what about **emphasis** on the right _syllable_.
+Now what about <b>emphasis<\b> on the right _syllable_.
 
 Playing with [Software Carpentry at UCSB](http://remi-daigle.github.io/2016-04-15-UCSB).
 
