@@ -1,0 +1,66 @@
+---
+title: "viz"
+author: "Ben Best"
+date: "April 16, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load
+
+- load libraries
+- inspect
+
+```{r load, results='hide', message=FALSE, warning=FALSE}
+library(dplyr)
+library(ggplot2) # install.packages('ggplot2')
+library(gapminder)
+
+# preview data
+gapminder
+
+# get range of available data
+summary(gapminder)
+
+# setup dataframe
+g = gapminder %>%
+  filter(year==2007) %>%   # most recent year 
+  mutate(pop_m = pop/1e6)  # population, millions
+```
+
+## Simple Scatterplot
+
+```{r}
+# plot scatterplot of most recent year 
+s = ggplot(g, aes(x=gdpPercap, y=lifeExp)) +
+  geom_point()
+s
+```
+
+## With Aesthetics and Labels
+
+```{r}
+# add aesthetic of size by population, color by continent
+s = ggplot(g, aes(x=gdpPercap, y=lifeExp, 
+                  size=pop_m, colour=continent, key=country)) +
+  geom_point() +
+  # add title, update axes labels
+  ggtitle('Health & Wealth of Nations for 2007') +
+  xlab('GDP per capita ($/year)') +
+  ylab('Life expectancy (years)') +
+  # label legend
+  scale_colour_discrete(name='Continent') +
+  scale_size_continuous(name='Population (M)')
+s
+```
+
+## Interactive
+
+```{r}
+library(plotly) # install.packages('plotly')
+ggplotly(s)
+```
+
